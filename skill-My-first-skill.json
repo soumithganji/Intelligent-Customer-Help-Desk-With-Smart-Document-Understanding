@@ -1,0 +1,395 @@
+{
+  "intents": [
+    {
+      "intent": "definition",
+      "examples": [
+        {
+          "text": "what is a trifecta?"
+        },
+        {
+          "text": "how do you define an exacta?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "hours",
+      "examples": [
+        {
+          "text": "what time does the track open?"
+        },
+        {
+          "text": "what are your hours?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "greeting",
+      "examples": [
+        {
+          "text": "heylo"
+        },
+        {
+          "text": "good morning"
+        },
+        {
+          "text": "hello"
+        },
+        {
+          "text": "hi"
+        },
+        {
+          "text": "hey"
+        },
+        {
+          "text": "heyoo"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "thanks",
+      "examples": [
+        {
+          "text": "thanks"
+        },
+        {
+          "text": "thank you"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "location",
+      "examples": [
+        {
+          "text": "how to get to the track"
+        },
+        {
+          "text": "where are you located?"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "bets",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "pick 6",
+          "synonyms": [
+            "pick6"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "place",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "show",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "superfecta",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "exacta",
+          "synonyms": [
+            "perfecta"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "trifecta",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "win",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "racetrack",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "track",
+          "synonyms": [
+            "horse racing",
+            "harness racing",
+            "raceway"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "teller",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "teller",
+          "synonyms": [
+            "desk",
+            "betting table",
+            "counter",
+            "clerk",
+            "cashier"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "teller",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "the window opens at noon"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1588771717486",
+      "conditions": "@teller",
+      "dialog_node": "node_8_1588771976198",
+      "previous_sibling": "node_10_1588771750286"
+    },
+    {
+      "type": "standard",
+      "title": "racetrack",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "the racetrack is open everyday"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1588771717486",
+      "conditions": "@racetrack",
+      "dialog_node": "node_10_1588771750286"
+    },
+    {
+      "type": "standard",
+      "title": "exacta",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "a bet in which the first two places in a race must be predicted in the correct order"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1588772270348",
+      "conditions": "@bets:exacta",
+      "dialog_node": "node_2_1588772660431",
+      "previous_sibling": "node_1_1588772452997"
+    },
+    {
+      "type": "standard",
+      "title": "trifecta",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "a bet in which the person betting forecasts the first three finishers in a race in the correct order"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1588772270348",
+      "conditions": "@bets:trifecta",
+      "dialog_node": "node_1_1588772452997"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_7_1588771351857",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "definitions",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_1_1588772452997"
+      },
+      "conditions": "#definition",
+      "dialog_node": "node_10_1588772270348",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "greeting",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "hello"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#greeting",
+      "dialog_node": "node_7_1588771351857",
+      "previous_sibling": "node_8_1588771541528"
+    },
+    {
+      "type": "standard",
+      "title": "thank you",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "you're welcome!!"
+              },
+              {
+                "text": "welcome!!"
+              },
+              {
+                "text": "anytime!!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          },
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#thanks",
+      "dialog_node": "node_8_1588771541528",
+      "previous_sibling": "node_10_1588771717486"
+    },
+    {
+      "type": "standard",
+      "title": "hours",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_10_1588771750286"
+      },
+      "conditions": "#hours",
+      "dialog_node": "node_10_1588771717486",
+      "previous_sibling": "node_10_1588772270348"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello. How can I help you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [
+    {
+      "text": "shgjha"
+    }
+  ],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "My first skill",
+  "language": "en",
+  "description": ""
+}
